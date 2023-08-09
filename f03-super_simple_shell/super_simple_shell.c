@@ -11,7 +11,6 @@ char *getin(void)
     char *save = NULL;
     size_t len = 0;
 
-    printf("$ ");
     if ((getline(&save, &len, stdin)) != -1)
     {
 		return (save);
@@ -33,24 +32,24 @@ char **separate(void)
         in_cpy = malloc(sizeof(char) * strlen(in));
         strcpy(in_cpy, in);
 
-        token = strtok(in, " \n");
+        token = strtok(in, " \n\t");
 
         while (token != NULL)
         {
             i++;
-            token = strtok(NULL, " \n");
+            token = strtok(NULL, " \n\t");
         }
         i++;
 
         arr = malloc(sizeof(char*) * i);
 
-        token = strtok(in_cpy, " \n");
+        token = strtok(in_cpy, " \n\t");
 
         for (j = 0; token != NULL ; j++)
         {
             arr[j] = malloc(sizeof(char) * strlen(token));
             strcpy(arr[j], token);
-            token = strtok(NULL, " \n");
+            token = strtok(NULL, " \n\t");
         }
         arr[j] = NULL;
         return (arr);
