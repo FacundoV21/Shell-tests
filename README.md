@@ -4,11 +4,11 @@
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [File Descriptions](#file-descriptions)
-   * ['shell.h'](#shellh)
-   * ['main.c'](#mainc)
-   * ['parse.c'](#parsec)
-   * ['path.c'](#pathc)
-   * ['execute.c'](#executec)
+   * [shell.h](#shellh)
+   * [main.c](#mainc)
+   * [parse.c](#parsec)
+   * [path.c](#pathc)
+   * [execute.c](#executec)
 3. [Basic Usage](#basic-usage)
 4. [Features](#features)
 5. [Edge and Special Cases](#edge-and-special-cases)
@@ -20,18 +20,18 @@
 Simple Shell is a basic shell program that provides functionalities similar to traditional Unix shells. You can use it to run commands either by specifying their full paths, relative paths or by relying on the PATH environment variable. This shell handles command execution, provides feedback for errors and ensures proper memory management.
 ***
 ## File Descriptions
-- `shell.h`: This is the header file containing the necessary libraries, macro definitions and function prototypes required for our shell. It also has the structure definition for the linked list that holds directories from the PATH environment variable.
-- `main.c`: Contains the main loop of our shell program. It constantly waits for user input, processes that input and executes the corresponding commands.
-- `parse.c`: This file contains the parse_input function which is responsible for taking an input string (like a command) and breaking it down into individual words or tokens.
-- `path.c`: This file contains several functions related to managing and searching the PATH:
-* parse_path: Breaks down the PATH environment variable into a linked list of directories.
-* search_path: Searches for an executable command in the directories listed in PATH.
-* free_path_list: Frees the memory occupied by the linked list holding the PATH directories.
+1. `shell.h`: This is the header file containing the necessary libraries, macro definitions and function prototypes required for our shell. It also has the structure definition for the linked list that holds directories from the PATH environment variable.
+2. `main.c`: Contains the main loop of our shell program. It constantly waits for user input, processes that input and executes the corresponding commands.
+3. `parse.c`: This file contains the `parse_input` function which is responsible for taking an input string (like a command) and breaking it down into individual words or tokens.
+4. `path.c`: This file contains several functions related to managing and searching the PATH:
+* `parse_path`: Breaks down the PATH environment variable into a linked list of directories.
+* `search_path`: Searches for an executable command in the directories listed in PATH.
+* `free_path_list`: Frees the memory occupied by the linked list holding the PATH directories.
 Once we have our commands tokenised, we need to determine their path. This makes it essential to introduce path-related operations after parsing.
-- `execute.c`: Functions in this file are responsible for the execution of commands:
-* direct_execute: Executes commands that start with '/' or '.' directly without searching in PATH.
-* path_execute: Searches for a command in the PATH and then executes it.
-* execute_command: Checks how a command should be executed (either directly or through PATH) and then does so.
+5. `execute.c`: Functions in this file are responsible for the execution of commands:
+* `direct_execute`: Executes commands that start with '/' or '.' directly without searching in PATH.
+* `path_execute`: Searches for a command in the PATH and then executes it.
+* `execute_command`: Checks how a command should be executed (either directly or through PATH) and then does so.
 With the parsed tokens and determined paths, we finally execute the command.
 ***
 ## Basic Usage
