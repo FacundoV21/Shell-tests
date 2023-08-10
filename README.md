@@ -4,11 +4,11 @@
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [File Descriptions](#file-descriptions)
-   * [shell.h](#shellh)
-   * [main.c](#mainc)
-   * [parse.c](#parsec)
-   * [path.c](#pathc)
-   * [execute.c](#executec)
+   * [shell.h](#shell.h)
+   * [main.c](#main.c)
+   * [parse.c](#parse.c)
+   * [path.c](#path.c)
+   * [execute.c](#execute.c)
 3. [Basic Usage](#basic-usage)
 4. [Features](#features)
 5. [Edge and Special Cases](#edge-and-special-cases)
@@ -60,6 +60,14 @@ CTRL+D or typing exit and pressing enter.
 * Proper memory management to avoid memory leaks.
 ***
 ## Edge and Special Cases
+**1. Empty Input:**
+If a user simply presses enter without typing a command, the shell should handle this smoothly and present the user with another prompt.
+**2. Command Not Found:**
+If the user types in a command that isn't found in any of the directories listed in the PATH, the shell should return an error message, e.g., command not found.
+**3. Permissions:**
+If the command exists but the user doesn't have the right permissions to execute it, an appropriate error should be displayed.
+**Invalid Arguments:**
+If a command is executed with incorrect arguments, the command itself should display its error.
 ***
 ## Debugging and Testing
 ***
