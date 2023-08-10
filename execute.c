@@ -82,6 +82,10 @@ void path_execute(char **tokens)
  */
 void execute_command(char **tokens)
 {
+    if (strcmp(tokens[0], "exit") == 0)
+        {
+            exit(0);
+        }
     /* If the command starts with '/' or '.', just execute directly */
     if (tokens[0][0] == '/' || tokens[0][0] == '.')
     {
