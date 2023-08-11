@@ -5,32 +5,37 @@
  */
 int main(void)
 {
-    char *input_line = NULL;
-    size_t len = 0;
-    ssize_t read;
-	char **tokens;
-	int i;
+    char *input_line = NULL;/* Ptr to hold user's input line */
+    size_t len = 0; /* Size of the input buffer */
+    ssize_t read; /* Number of characters read by getline */
+	char **tokens;/*2D arr to hold each parsed tok frm inplin*/
+	int i; /* Loop counter for freeing memory */
 
     while (1)
-    {
+    {/*Inf loop to keep shell running until manually closed */
         printf("#cisfun$ ");  /* Display prompt */
-        read = getline(&input_line, &len, stdin);  /* Read user input */
-        /* Check for EOF (ctrl+d) */
-        if (read == -1)
+        read = getline(&input_line, &len, stdin);
+        /* Read user inp. getline dyn alloc mem */
+        if (read == -1) /* If EOF (ctrl+d) */
         {
             free(input_line);
 			printf("\n");
             exit(EXIT_SUCCESS);
         }
-		/* Parse the input line into tokens */
-        tokens = parse_input(input_line);
-		/* Execute the command */
-        execute_command(tokens);
-        /* Free tokens */
-        for (i = 0; tokens[i]; i++)
+        tokens = parse_input(input_line); /* Parse inpline into tokens */
+        if (tokens[0] && strcmp(tokens[0], "exit") == 0)
+        { /* Cleanup and exit */
+            for (i = 0; tokens[i]; i++)
+                free(tokens[i]);
+            free(tokens);
+            free(input_line);
+            exit(EXIT_SUCCESS);
+        }
+        execute_command(tokens); /* Execute user's cmd */
+        for (i = 0; tokens[i]; i++) /* To avoid memory leaks */
             free(tokens[i]);
-        free(tokens);
+        free(tokens); /* Main tokens ptr */
     }
-    free(input_line);
-    return (EXIT_SUCCESS);
+    free(input_line);/*To release mem if infloop ever breaks in fture mods*/
+    return (EXIT_SUCCESS);/*This might not be reached due to infloop*/
 }
