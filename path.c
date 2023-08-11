@@ -1,4 +1,24 @@
 #include "shell.h"
+
+
+/**
+ * _getenv - Gets the global variable PATH
+ * Return: String with the path or NULL
+ */
+char *_getenv(const char *name)
+{
+    int i = 0;
+    int len = strlen(name);
+    while (environ[i])
+    {
+        if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
+        {
+            return &environ[i][len + 1];
+        }
+        i++;
+    }
+    return NULL;
+}
 /**
  * parse_path - Builds a linked list of directories from PATH
  * Return: Pointer to the head of the linked list
@@ -8,10 +28,15 @@
  */
 path_t *parse_path(void)
 {   /* Retrieving the PATH environment variable */
-    char *ori_path = getenv("PATH");
-    char *path = strdup(ori_path); /* cp PATH before tokenising */
+    char *ori_path;
+    char *path; /* cp PATH before tokenising */
     char *token;
     path_t *head = NULL, *new_node, *temp;
+
+    if ((ori_path = getenv("PATH")) == NULL)
+        return (NULL);
+
+    path = strdup(ori_path);
 
     if (!path)
         exit(EXIT_FAILURE);

@@ -17,7 +17,7 @@ char **parse_input(char *input)
         exit(EXIT_FAILURE);
     }
 
-    token = strtok(input, " \t\n");
+    token = strtok(input, " \t\n\"");
     while (token != NULL)
     {
         tokens[position] = strdup(token);
@@ -34,7 +34,7 @@ char **parse_input(char *input)
             }
         }
 
-        token = strtok(NULL, " \t\n");
+        token = strtok(NULL, " \t\n\"");
     }
     tokens[position] = NULL;
     return (tokens);

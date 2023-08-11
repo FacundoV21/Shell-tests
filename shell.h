@@ -10,6 +10,8 @@
 #include <sys/stat.h>
 #include <errno.h> 
 
+extern char **environ;
+
 #define BUFFER_SIZE 1024
 
 /**

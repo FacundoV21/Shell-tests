@@ -9,11 +9,13 @@ int main(void)
     size_t len = 0; /* Size of the input buffer */
     ssize_t read; /* Number of characters read by getline */
 	char **tokens;/*2D arr to hold each parsed tok frm inplin*/
-	int i; /* Loop counter for freeing memory */
+	int i, fd_isatty; /* Loop counter for freeing memory */
 
     while (1)
     {/*Inf loop to keep shell running until manually closed */
-        printf("#cisfun$ ");  /* Display prompt */
+        fd_isatty = isatty(STDIN_FILENO);
+        if (fd_isatty)
+            printf("#cisfun$ ");  /* Display prompt */
         read = getline(&input_line, &len, stdin);/*Read user inp. dynallocmem*/
         if (read == -1) /* If EOF (ctrl+d) */
         {
@@ -34,6 +36,8 @@ int main(void)
         for (i = 0; tokens[i]; i++) /* To avoid memory leaks */
             free(tokens[i]);
         free(tokens); /* Main tokens ptr */
+        if(!fd_isatty)
+            break;
     }
     free(input_line);/*To release mem if infloop ever breaks in fture mods*/
     return (EXIT_SUCCESS);/*This might not be reached due to infloop*/
