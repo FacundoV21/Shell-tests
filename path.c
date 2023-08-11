@@ -33,7 +33,7 @@ path_t *parse_path(void)
     char *token;
     path_t *head = NULL, *new_node, *temp;
 
-    if ((ori_path = getenv("PATH")) == NULL)
+    if ((ori_path = _getenv("PATH")) == NULL)
         return (NULL);
 
     path = strdup(ori_path);
