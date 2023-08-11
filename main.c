@@ -14,8 +14,7 @@ int main(void)
     while (1)
     {/*Inf loop to keep shell running until manually closed */
         printf("#cisfun$ ");  /* Display prompt */
-        read = getline(&input_line, &len, stdin);
-        /* Read user inp. getline dyn alloc mem */
+        read = getline(&input_line, &len, stdin);/*Read user inp. dynallocmem*/
         if (read == -1) /* If EOF (ctrl+d) */
         {
             free(input_line);
