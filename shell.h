@@ -24,7 +24,7 @@ typedef struct path_s
     char *dir;
     struct path_s *next;
 } path_t;
-/* Function prototypes */
+
 char **parse_input(char *input);
 void execute_command(char **tokens);
 char *search_path(char *cmd, path_t *path_list);
@@ -32,4 +32,7 @@ path_t *parse_path(void);
 void free_path_list(path_t *head);
 void direct_execute(char **tokens);
 void path_execute(char **tokens);
+char **inis_toks_arr(char *input, char **tokens, size_t *bufsize);
+char **fill_toks_arr(char **tokens, size_t *bufsize);
+
 #endif	
