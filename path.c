@@ -1,9 +1,10 @@
 #include "shell.h"
-
-
 /**
- * _getenv - Gets the global variable PATH
- * Return: String with the path or NULL
+ * _getenv - retrieves the value of an environment variable
+ * @name: name of the environment variable to retrieve
+ * 
+ * Return: pointer to the value of the environment variable,
+ * or NULL if not found
  */
 char *_getenv(const char *name)
 {
@@ -17,7 +18,7 @@ char *_getenv(const char *name)
         }
         i++;
     }
-    return NULL;
+    return (NULL);
 }
 /**
  * parse_path - Builds a linked list of directories from PATH
