@@ -24,6 +24,11 @@ int main(void)
             exit(EXIT_SUCCESS);
         }
         tokens = parse_input(input_line); /* Parse inpline into tokens */
+        if (tokens[0] == NULL)
+        {
+            free(tokens);
+            continue;
+        }
         if (tokens[0] && strcmp(tokens[0], "exit") == 0)
         { /* Cleanup and exit */
             for (i = 0; tokens[i]; i++)
