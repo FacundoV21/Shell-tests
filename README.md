@@ -22,7 +22,7 @@ Simple Shell is a basic shell program that provides functionalities similar to t
 ## File Descriptions
 1. `shell.h`: This is the header file containing the necessary libraries, macro definitions and function prototypes required for our shell. It also has the structure definition for the linked list that holds directories from the PATH environment variable.
 2. `main.c`: Contains the main loop of our shell program. It constantly waits for user input, processes that input and executes the corresponding commands.
-3. `parse.c`: This file contains the `parse_input` function which is responsible for taking an input string (like a command) and breaking it down into individual words or tokens.
+3. `parse.c`: This file contains the `parse_input` function which is responsible for taking an input string (like a command) and breaking it down into individual tokens.
 4. `path.c`: This file contains several functions related to managing and searching the PATH:
 * `parse_path`: Breaks down the PATH environment variable into a linked list of directories.
 * `search_path`: Searches for an executable command in the directories listed in PATH.
