@@ -32,7 +32,9 @@ path_t *parse_path(void);
 void free_path_list(path_t *head);
 void direct_execute(char **tokens);
 void path_execute(char **tokens);
-char **inis_toks_arr(char *input, char **tokens, size_t *bufsize);
-char **fill_toks_arr(char **tokens, size_t *bufsize);
-
+/*char **inis_toks_arr(char *input, char **tokens, size_t *bufsize, char **saveptr);*/
+/*char **fill_toks_arr(char **tokens, size_t *bufsize, char **saveptr);*/
+char **init_token(void);
+void check_allocation(char **tokens);
+char **resize_token_buffer(char **tokens, size_t *bufsize);
 #endif	
