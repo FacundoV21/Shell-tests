@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * parse_input - Tokenises the input line
  * @input: The input line
@@ -6,80 +7,69 @@
  */
 char **parse_input(char *input)
 {
-    char **tokens = NULL;
-    size_t bufsize = BUFFER_SIZE;
-
-    input[strcspn(input, "\n")] = '\0';/* Remove character */
-    tokens = inis_toks_arr(input, tokens, &bufsize);
-    if (!tokens[0])
-        return (tokens);
-    tokens = fill_toks_arr(tokens, &bufsize);
-    return (tokens);
-}
-/**
- * init_toks_arr - Initialises the tokens array
- * @input: The input string
- * @tokens: The tokens array
- * @bufsize: Pointer to the buffer size
- * Return: Initialised tokens array
- */
-char **inis_toks_arr(char *input, char **tokens, size_t *bufsize)
-{
+    char **tokens;
+    size_t bufsize = BUFFER_SIZE, position = 0;
     char *token;
 
-    token = strtok(input, " \t\n\"");/* Get the initial token from the input */
-    if (token == NULL) /* If no tokens, allocate space for NULL */
+    input[strcspn(input, "\n\r")] = '\0';
+    if (!(token = strtok(input, " \t\n\"")))
+        return (init_token());
+
+    tokens = malloc(bufsize * sizeof(char *));
+    check_allocation(tokens);
+
+    while (token)
     {
-        tokens = malloc(sizeof(char *));
-        if (!tokens)
-        {
-            fprintf(stderr, "shell: allocation error\n");
-            exit(EXIT_FAILURE);
-        }
-        tokens[0] = NULL;
-        return (tokens);
+        tokens[position++] = strdup(token);
+        if (position >= bufsize)
+            tokens = resize_token_buffer(tokens, &bufsize);
+        token = strtok(NULL, " \t\n\"");
     }
-    /* Allocate space based on buffer size */
-    tokens = malloc(*bufsize * sizeof(char *));
+    tokens[position] = NULL;
+    return (tokens);
+}
+
+/**
+ * init_token - Initialize a token
+ * Return: Initialized token
+ */
+char **init_token(void)
+{
+    char **tokens;
+
+    tokens = malloc(sizeof(char *));
     if (!tokens)
     {
         fprintf(stderr, "shell: allocation error\n");
         exit(EXIT_FAILURE);
     }
+    tokens[0] = NULL;
     return (tokens);
 }
+
 /**
- * fill_tokens_array - Fills up the tokens array
- * @tokens: The tokens array
- * @bufsize: Pointer to the buffer size
- * Return: Filled tokens array
+ * check_allocation - Checks memory allocation
+ * @tokens: The allocated memory
  */
-char **fill_toks_arr(char **tokens, size_t *bufsize)
+void check_allocation(char **tokens)
 {
-    char *token;
-    size_t position = 0;
-
-    do
+    if (!tokens)
     {
-        /* Duplicate the token into the array */
-        tokens[position] = strdup(token);
-        position++;
+        fprintf(stderr, "shell: allocation error\n");
+        exit(EXIT_FAILURE);
+    }
+}
 
-        /* Reallocate if buffer size is exceeded */
-        if (position >= *bufsize)
-        {
-            *bufsize += BUFFER_SIZE;
-            tokens = realloc(tokens, *bufsize * sizeof(char *));
-            if (!tokens)
-            {
-                fprintf(stderr, "shell: allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-        }
-        token = strtok(NULL, " \t\n\"");/* Get the next token */
-    } 
-    while (token != NULL);
-    tokens[position] = NULL;
-
+/**
+ * resize_token_buffer - Resizes the token buffer
+ * @tokens: The token buffer
+ * @bufsize: The buffer size
+ * Return: The resized buffer
+ */
+char **resize_token_buffer(char **tokens, size_t *bufsize)
+{
+    *bufsize += BUFFER_SIZE;
+    tokens = realloc(tokens, *bufsize * sizeof(char *));
+    check_allocation(tokens);
     return (tokens);
 }
