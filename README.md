@@ -16,6 +16,7 @@
 7. [Debugging and Testing](#debugging-and-testing)
 8. [Potential Pitfalls](#potential-pitfalls)
 9. [Scenarios that Might Cause the Program to Crash](#scenarios-that-might-cause-the-program-to-crash)
+10. [Authors](#authors)
 ***
 ## Introduction
 Simple Shell is a basic shell program that provides functionalities similar to traditional Unix shells. You can use it to run commands either by specifying their full paths, relative paths or by relying on the PATH environment variable. This shell handles command execution, provides feedback for errors and ensures proper memory management.
@@ -23,8 +24,9 @@ Simple Shell is a basic shell program that provides functionalities similar to t
 ## File Descriptions
 1. `shell.h`: This is the header file containing the necessary libraries, macro definitions and function prototypes required for our shell. It also has the structure definition for the linked list that holds directories from the PATH environment variable.
 2. `main.c`: Contains the main loop of our shell program. It constantly waits for user input, processes that input and executes the corresponding commands.
-3. `parse.c`: This file contains the `parse_input` function which is responsible for taking an input string (like a command) and breaking it down into individual tokens and two auxiliary functions, `inis_toks_arr` and `fill_toks_arr`. The fist one is in charge of initialising the tokens array with the initial token and the last function is liable for filling up the tokens array with subsequent tokens.
+3. `parse.c`: Contains functions that tokenise the user's input.
 4. `path.c`: This file contains several functions related to managing and searching the PATH:
+* `_getenv`: Retrieves the value of an environment variable.
 * `parse_path`: Breaks down the PATH environment variable into a linked list of directories.
 * `search_path`: Searches for an executable command in the directories listed in PATH.
 * `free_path_list`: Frees the memory occupied by the linked list holding the PATH directories.
@@ -50,6 +52,8 @@ Example:
 ```bash
 #cisfun$ ls -l
 ```
+
+
 **4. Exiting:**
 CTRL+D or typing exit and pressing enter.
 ***
@@ -84,3 +88,4 @@ If a command is executed with incorrect arguments, the command itself should dis
 ***
 ## Scenarios that Might Cause the Program to Crash
 ***
+## Authors
