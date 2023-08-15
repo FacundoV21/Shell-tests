@@ -20,7 +20,8 @@ int main(void)
 		if (read == -1) /* If EOF (ctrl+d) */
 		{
 			free(input_line);
-			printf("\n");
+			if (fd_isatty)
+				printf("\n");
 			exit(EXIT_SUCCESS);
 		}
 		tokens = parse_input(input_line); /* Parse inpline into tokens */
@@ -33,8 +34,7 @@ int main(void)
 		for (i = 0; tokens[i]; i++) /* To avoid memory leaks */
 			free(tokens[i]);
 		free(tokens); /* Main tokens ptr */
-		if (!fd_isatty)
-			break;
+		
 		}
 	free(input_line);/*To release mem if infloop ever breaks in fture mods*/
 	return (EXIT_SUCCESS);/*This might not be reached due to infloop*/
