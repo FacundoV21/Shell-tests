@@ -33,7 +33,7 @@ void direct_execute(char **tokens)
  * path_execute - Searches for the command in the PATH and executes it.
  * @tokens: The command and its arguments.
  */
-void path_execute(char **tokens)
+void path_execute(char **tokens, char *argv[])
 {
 	pid_t pid;
 	int status;
@@ -69,7 +69,7 @@ void path_execute(char **tokens)
 	}
 	else
 	{
-		fprintf(stderr, "%s: command not found\n", tokens[0]);
+		fprintf(stderr, "%s: 1: %s: not found\n", argv[0], tokens[0]);
 	}
 	free_path_list(path_list);
 }
@@ -77,7 +77,7 @@ void path_execute(char **tokens)
  * execute_command - Execute a given command
  * @tokens: The command and its arguments
  */
-void execute_command(char **tokens, char *input_line)
+void execute_command(char **tokens, char *input_line, char *argv[])
 {
 	int i;
 
@@ -96,5 +96,5 @@ void execute_command(char **tokens, char *input_line)
 		return;
 	}
     /* Otherwise, search for it in the PATH */
-	path_execute(tokens);
+	path_execute(tokens, argv);
 }

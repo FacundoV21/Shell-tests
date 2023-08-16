@@ -3,13 +3,14 @@
 * main - The main loop of the shell
 * Return: Always 0 (success)
 */
-int main(void)
+int main(int argc, char *argv[])
 {
 	char *input_line = NULL;/* Ptr to hold user's input line */
 	size_t len = 0; /* Size of the input buffer */
 	ssize_t read; /* Number of characters read by getline */
 	char **tokens;/*2D arr to hold each parsed tok frm inplin*/
 	int i, fd_isatty; /* Loop counter for freeing memory */
+	(void) argc;
 
 	while (1)
 	{/*Inf loop to keep shell running until manually closed */
@@ -30,7 +31,7 @@ int main(void)
 			free(tokens);
 			continue;
 		}
-		execute_command(tokens, input_line); /* Execute user's cmd */
+		execute_command(tokens, input_line, argv); /* Execute user's cmd */
 		for (i = 0; tokens[i]; i++) /* To avoid memory leaks */
 			free(tokens[i]);
 		free(tokens); /* Main tokens ptr */
