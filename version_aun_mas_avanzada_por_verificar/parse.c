@@ -66,16 +66,16 @@ void check_allocation(char **tokens)
 */
 char **resize_token_buffer(char **tokens, size_t *bufsize)
 {
-    size_t new_bufsize = *bufsize + BUFFER_SIZE;
-    char **new_tokens = malloc(new_bufsize * sizeof(char *));
-    size_t i;
+	size_t new_bufsize = *bufsize + BUFFER_SIZE;
+	char **new_tokens = malloc(new_bufsize * sizeof(char *));
+	size_t i;
 
-    check_allocation(new_tokens);
-    if (!new_tokens)
-        return (tokens);
-    for (i = 0; i < *bufsize; i++)
-        new_tokens[i] = tokens[i];
-    free(tokens);
-    *bufsize = new_bufsize;
-    return (new_tokens);
+	check_allocation(new_tokens);
+	if (!new_tokens)
+		return (tokens);
+	for (i = 0; i < *bufsize; i++)
+		new_tokens[i] = tokens[i];
+	free(tokens);
+	*bufsize = new_bufsize;
+	return (new_tokens);
 }

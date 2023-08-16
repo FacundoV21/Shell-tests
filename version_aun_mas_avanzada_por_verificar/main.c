@@ -5,13 +5,14 @@
  */
 void handle_sigint(int sig)
 {
-    (void)sig;
-    write(STDOUT_FILENO, "\n#cisfun$ ", 10);
-    fflush(stdout);
+	(void)sig;
+	write(STDOUT_FILENO, "\n#cisfun$ ", 10);
+	fflush(stdout);
 }
 /**
 * main - The main loop of the shell
 * Return: Always 0 (success)
+
 */
 int main(int argc, char **argv)
 {
@@ -22,10 +23,10 @@ int main(int argc, char **argv)
 	int i, fd_isatty, line_counter = 0;/*Loop cnter for frng mem*/
 	(void) argc;
 
-    signal(SIGINT, handle_sigint);
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{/*Inf loop to keep shell running until manually closed */
-        line_counter++;
+		line_counter++;
 		fd_isatty = isatty(STDIN_FILENO);
 		if (fd_isatty)
 			printf("#cisfun$ ");  /* Display prompt */
