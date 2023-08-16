@@ -36,12 +36,12 @@ path_t *parse_path(void)
 	ori_path = _getenv("PATH");
 	if (ori_path == NULL)
 		return (NULL);
-
 	path = strdup(ori_path);
-
 	if (!path)
-		exit(EXIT_FAILURE);
-
+	{
+		fprintf(stderr, "shell: failed to duplicate PATH\n");
+		return (NULL);
+	}
 	token = strtok(path, ":"); /* Start tokenising PATH variable */
 	while (token) /* Iterate through each tokenised directory */
 	{
@@ -54,7 +54,7 @@ path_t *parse_path(void)
 		if (!head) /* If it's the first directory, set it as head */
 			head = new_node;
 		else
-		{   /* Otherwise append to the end of the linked list */
+		{/* Otherwise append to the end of the linked list */
 			temp = head;
 			while (temp->next)
 				temp = temp->next;
@@ -84,7 +84,10 @@ char *search_path(char *cmd, path_t *path_list)
 	{ /* Allocate memory for the full path of the command */
 		full_path = malloc(strlen(path_list->dir) + strlen(cmd) + 2);
 		if (!full_path)
-			exit(EXIT_FAILURE);
+		{
+			fprintf(stderr, "shell: failed to allocate full path\n");
+			return (NULL);
+		}
 		/* Build the full path */
 		strcpy(full_path, path_list->dir);
 		strcat(full_path, "/");
@@ -92,7 +95,7 @@ char *search_path(char *cmd, path_t *path_list)
 		/* Check if the builded path is executable */
 		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
 			return (full_path);
-		/* If not exec or doesn't exist, free memory and mv to nxt dirtry */
+	/* If not exec or doesn't exist, free memory and mv to nxt dirtry */
 		free(full_path);
 		path_list = path_list->next;
 	}
@@ -108,7 +111,7 @@ void free_path_list(path_t *head)
 {
 	path_t *temp;
 
-	/* Iterate through the list, freeing each directory node */
+/* Iterate through the list, freeing each directory node */
 	while (head)
 	{
 		temp = head->next;

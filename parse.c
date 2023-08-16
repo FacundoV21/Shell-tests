@@ -29,7 +29,6 @@ char **parse_input(char *input)
 	tokens[position] = NULL;
 	return (tokens);
 }
-
 /**
 * init_token - Initialize a token
 * Return: Initialized token
@@ -47,7 +46,6 @@ char **init_token(void)
 	tokens[0] = NULL;
 	return (tokens);
 }
-
 /**
 * check_allocation - Checks memory allocation
 * @tokens: The allocated memory
@@ -60,7 +58,6 @@ void check_allocation(char **tokens)
 		exit(EXIT_FAILURE);
 	}
 }
-
 /**
 * resize_token_buffer - Resizes the token buffer
 * @tokens: The token buffer
@@ -69,8 +66,16 @@ void check_allocation(char **tokens)
 */
 char **resize_token_buffer(char **tokens, size_t *bufsize)
 {
-	*bufsize += BUFFER_SIZE;
-	tokens = realloc(tokens, *bufsize * sizeof(char *));
-	check_allocation(tokens);
-	return (tokens);
+	size_t new_bufsize = *bufsize + BUFFER_SIZE;
+	char **new_tokens = malloc(new_bufsize * sizeof(char *));
+	size_t i;
+
+	check_allocation(new_tokens);
+	if (!new_tokens)
+		return (tokens);
+	for (i = 0; i < *bufsize; i++)
+		new_tokens[i] = tokens[i];
+	free(tokens);
+	*bufsize = new_bufsize;
+	return (new_tokens);
 }
